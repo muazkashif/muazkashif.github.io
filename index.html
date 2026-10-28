@@ -5,15 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Muaz Kashif</title>
   <meta name="description" content="Muaz Kashif — New York City.">
+  <meta name="theme-color" content="#f8f5ef">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f8f5ef'/%3E%3Ctext x='30' y='47' font-family='Georgia,serif' font-size='42' text-anchor='middle' fill='%231d1c1a'%3EM%3C/text%3E%3Ccircle cx='50' cy='44' r='4.5' fill='%237a2e2e'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <script>document.documentElement.classList.add('js');</script>
   <style>
     :root {
       --bg: #f8f5ef;
       --text: #1d1c1a;
       --muted: #6f6a62;
-      --soft: #a39d93;
+      --soft: #766f66; /* 4.5:1 on --bg */
       --line: #e3ddd2;
       --accent: #7a2e2e; /* deep oxblood */
       --serif: "Cormorant Garamond", Georgia, serif;
@@ -73,18 +76,28 @@
       padding-bottom: 3px;
       border-bottom: 1px solid transparent;
       transition: color 0.25s ease, border-color 0.25s ease;
+      position: relative;
     }
+    /* Larger tap area without changing the layout */
+    nav a::before { content: ""; position: absolute; inset: -0.8rem -0.5rem; }
     nav a:hover { color: var(--text); }
     nav a.active { color: var(--text); border-bottom-color: var(--accent); }
 
     /* Sections */
     main { flex: 1; padding: 5rem 0 4rem; }
-    section { display: none; }
-    section.active { display: block; animation: fade 0.6s ease; }
+    /* Only hide sections when JS is running, so the page isn't blank without it */
+    section + section { margin-top: 5rem; }
+    .js section { display: none; margin-top: 0; }
+    .js section.active { display: block; animation: fade 0.6s ease; }
     @keyframes fade {
       from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: none; }
     }
+    @media (prefers-reduced-motion: reduce) {
+      .js section.active { animation: none; }
+      nav a, footer a { transition: none; }
+    }
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
     .eyebrow {
       font-size: 0.72rem;
@@ -176,7 +189,7 @@
   <div class="wrap">
     <header>
       <a href="#home" class="monogram">M<em>.</em>K</a>
-      <nav>
+      <nav aria-label="Primary">
         <a href="#home">Home</a>
         <a href="#writing">Writing</a>
         <a href="#projects">Projects</a>
@@ -196,25 +209,25 @@
 
       <section id="writing">
         <div class="eyebrow">Writing</div>
-        <h2>Notes &amp; <em>essays</em></h2>
+        <h2 role="heading" aria-level="1">Notes &amp; <em>essays</em></h2>
         <p class="placeholder">Nothing here yet.</p>
       </section>
 
       <section id="projects">
         <div class="eyebrow">Projects</div>
-        <h2>Things I've <em>made</em></h2>
+        <h2 role="heading" aria-level="1">Things I've <em>made</em></h2>
         <p class="placeholder">Nothing here yet.</p>
       </section>
 
       <section id="about">
         <div class="eyebrow">About</div>
-        <h2>A little <em>about me</em></h2>
+        <h2 role="heading" aria-level="1">A little <em>about me</em></h2>
         <p class="placeholder">Coming soon.</p>
       </section>
     </main>
 
     <footer>
-      <span>© <span id="year"></span> Muaz Kashif</span>
+      <span>© <span id="year">2026</span> Muaz Kashif</span>
       <div class="links">
         <a href="https://substack.com/@muazkashif">Substack</a>
         <a href="https://www.instagram.com/mazikashi/">Instagram</a>
@@ -229,12 +242,20 @@
       const id = (location.hash || '#home').slice(1);
       const target = document.getElementById(id) ? id : 'home';
       document.querySelectorAll('section').forEach(s => s.classList.toggle('active', s.id === target));
-      document.querySelectorAll('nav a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + target));
+      document.querySelectorAll('nav a').forEach(a => {
+        const on = a.getAttribute('href') === '#' + target;
+        a.classList.toggle('active', on);
+        if (on) {
+          a.setAttribute('aria-current', 'page');
+          document.title = target === 'home' ? 'Muaz Kashif' : a.textContent + ' — Muaz Kashif';
+        } else {
+          a.removeAttribute('aria-current');
+        }
+      });
     }
     window.addEventListener('hashchange', show);
     show();
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
-</html>
 </html>

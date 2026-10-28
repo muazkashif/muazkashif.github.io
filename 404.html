@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page not found — Muaz Kashif</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#f8f5ef">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8f5ef;
+      --text: #1d1c1a;
+      --muted: #6f6a62;
+      --soft: #766f66;
+      --accent: #7a2e2e;
+      --serif: "Cormorant Garamond", Georgia, serif;
+      --sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: var(--accent); color: var(--bg); }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+    .wrap { max-width: 680px; width: 100%; margin: 0 auto; padding: 0 2rem; }
+    .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    .eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--accent); }
+    h1 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(3rem, 9vw, 4.75rem);
+      line-height: 1;
+      letter-spacing: -0.015em;
+      margin-bottom: 2rem;
+    }
+    h1 em { font-style: italic; color: var(--accent); }
+    p { font-family: var(--serif); font-size: 1.45rem; line-height: 1.55; color: var(--muted); }
+    a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); }
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="eyebrow">404</div>
+    <h1>Page <em>not found</em></h1>
+    <p>That page doesn't exist. <a href="/">Head back home.</a></p>
+  </main>
+</body>
+</html>
